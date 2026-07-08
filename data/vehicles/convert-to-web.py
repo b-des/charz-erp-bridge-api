@@ -4,7 +4,6 @@ import sys
 import uuid
 
 
-
 def salt():
     return uuid.uuid4().hex[:8]
 
@@ -41,19 +40,16 @@ def process_json_file(input_path, output_path=None):
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(result, f, ensure_ascii=False, indent=2)
-        print(f"Done. Saved to {out_path}")
+
+    print(f"Done. Saved to {out_path}")
 
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python convert-to-web.py <input path> [output path]")
+        print("Usage: python process_json.py <input.json> [output.json]")
         sys.exit(1)
 
-    input_path = sys.argv[1]
-    output_path = sys.argv[2] if len(sys.argv) > 2 else None
-    directory = Path(input_path)
-    files = list(directory.glob("*.json"))
-    print(files)
-    for file in files:
-        process_json_file(file, output_path + "/" + file.name)
+    input_file = sys.argv[1]
+    output_file = sys.argv[2] if len(sys.argv) > 2 else None
+    process_json_file(input_file, output_file)
 
