@@ -1,6 +1,8 @@
 import json
+from pathlib import Path
 import sys
 import uuid
+
 
 
 def salt():
@@ -35,7 +37,8 @@ def process_json_file(input_path, output_path=None):
     else:
         result = process_node(data, level=0)
 
-    out_path = output_path or input_path
+    out_path = Path(output_path)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(result, f, ensure_ascii=False, indent=2)
 
