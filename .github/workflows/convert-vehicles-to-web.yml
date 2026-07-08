@@ -6,8 +6,11 @@ on:
     branches: [ "main" ]  # Runs automatically when you push to the main branch
   workflow_dispatch:      # Allows you to click a button and run it manually
 
+permissions:
+  contents: write
+
 jobs:
-  run-script:
+  convert-vehicles:
     runs-on: ubuntu-latest
 
     steps:
@@ -30,3 +33,11 @@ jobs:
       # Step 4: Execute the Python file
       - name: Convert Vehicles for WEB application
         run: python data/vehicles/convert-to-web.py data/vehicles/raw/kraz-255b.json data/vehicles/web/kraz-255b.json
+
+      # Step 5: Commit and push the generated files
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@://github.com"
+          git add .
+          git commit -m 
