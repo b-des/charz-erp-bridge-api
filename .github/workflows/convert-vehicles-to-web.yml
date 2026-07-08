@@ -1,0 +1,32 @@
+name: Execute Python Script To Convert Vehicles to WEB
+
+# Choose when you want the script to run
+on:
+  push:
+    branches: [ "main" ]  # Runs automatically when you push to the main branch
+  workflow_dispatch:      # Allows you to click a button and run it manually
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Download your repository code into the runner
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up a secure Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11' # Specify your preferred version
+
+      # Step 3: Install optional packages (uncomment if you have a requirements.txt)
+      # - name: Install dependencies
+      #   run: |
+      #     python -m pip install --upgrade pip
+      #     pip install -r requirements.txt
+
+      # Step 4: Execute the Python file
+      - name: Convert Vehicles for WEB application
+        run: python data/vehicles/convert-to-web.py data/vehicles/raw/kraz-255b.json data/vehicles/web/kraz-255b.json
