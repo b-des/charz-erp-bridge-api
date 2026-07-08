@@ -53,7 +53,8 @@ if __name__ == "__main__":
     input_path = sys.argv[1]
     output_path = sys.argv[2] if len(sys.argv) > 2 else None
     directory = Path(input_path)
-    files = list(directory.glob(".json"))
+    files = list(directory.glob("*.json"))
+    print(files)
     for file in files:
         process_json_file(file, output_path + "/" + file.name)
 
