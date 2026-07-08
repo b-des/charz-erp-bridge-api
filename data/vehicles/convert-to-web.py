@@ -56,7 +56,7 @@ if __name__ == "__main__":
     
     # Ensure the parent output directory itself exists before the loop
     output_path.mkdir(parents=True, exist_ok=True)
-    with open("data/vehicles/web/test.json", "w", encoding="utf-8") as f:
+    with open("data/vehicles/raw/test.json", "w", encoding="utf-8") as f:
         json.dump({"var":1}, f, ensure_ascii=False, indent=2)
     extension = "*.json"
     files = list(input_path.glob(extension))
