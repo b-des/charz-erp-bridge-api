@@ -47,10 +47,13 @@ def process_json_file(input_path, output_path=None):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python process_json.py <input.json> [output.json]")
+        print("Usage: python convert-to-web.py <input path> [output path]")
         sys.exit(1)
 
-    input_file = sys.argv[1]
-    output_file = sys.argv[2] if len(sys.argv) > 2 else None
-    process_json_file(input_file, output_file)
+    input_path = sys.argv[1]
+    output_path = sys.argv[2] if len(sys.argv) > 2 else None
+    directory = Path(input_path)
+    files = list(directory.glob(".json"))
+    for file in files:
+        process_json_file(file, output_path + "/" + file.name)
 
