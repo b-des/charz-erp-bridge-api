@@ -32,7 +32,7 @@ jobs:
 
       # Step 4: Execute the Python file
       - name: Convert Vehicles for WEB application
-        run: python data/vehicles/convert-to-web.py data/vehicles/raw data/vehicles/web
+        run: python data/vehicles/convert-to-web.py ./data/vehicles/raw ./data/vehicles/web
 
       # Step 5: Commit and push the generated files
       - name: Commit and push changes
