@@ -39,6 +39,14 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@://github.com"
-          git add .
-          git commit -m "Automated file update from GitHub Actions"
-          git push
+
+          # ПРИМУСОВО додаємо файли, ігноруючи .gitignore
+          git add -f data/vehicles/web/
+
+          # Перевірка, чи з'явилися файли в індексі Git
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Working tree is clean. Nothing to commit."
+          else
+            git commit -m "Automated file update from GitHub Actions"
+            git push
+          fi
