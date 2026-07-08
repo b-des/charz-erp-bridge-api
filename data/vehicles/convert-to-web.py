@@ -41,8 +41,7 @@ def process_json_file(input_path, output_path=None):
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(result, f, ensure_ascii=False, indent=2)
-
-    print(f"Done. Saved to {out_path}")
+        print(f"Done. Saved to {out_path}")
 
 
 if __name__ == "__main__":
