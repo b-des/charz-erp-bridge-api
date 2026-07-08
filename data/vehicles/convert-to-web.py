@@ -50,10 +50,17 @@ if __name__ == "__main__":
         sys.exit(1)
 
     input_path = Path(sys.argv[1])
-    output_path = Path(sys.argv[2]) if len(sys.argv) > 2 else None
+    
+    # Provide a default fallback if output_path is not specified
+    output_path = Path(sys.argv[2]) if len(sys.argv) > 2 else input_path.parent / "web"
+    
+    # Ensure the parent output directory itself exists before the loop
+    output_path.mkdir(parents=True, exist_ok=True)
+
     extension = "*.json"
     files = list(input_path.glob(extension))
-    print(files)
+    print(f"Found files: {files}") # This will debug if files are actually found
+    
     for file in files:
         process_json_file(file, output_path / file.name)
 
