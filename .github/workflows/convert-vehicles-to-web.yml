@@ -40,4 +40,5 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@://github.com"
           git add .
-          git commit -m 
+          git commit -m "Automated file update from GitHub Actions"
+          git push
