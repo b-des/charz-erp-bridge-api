@@ -9,59 +9,67 @@ def salt():
 
 
 def process_node(node, level=0):
+    # Захист: якщо вузол не є словником (наприклад, це рядок чи число), повертаємо як є
+    if not isinstance(node, dict):
+        return node
+
     is_leaf = "children" not in node
 
-    # If node has children, add showCheckbox: false
+    # Якщо вузол має дітей, додаємо showCheckbox: false
     if not is_leaf:
         node["showCheckbox"] = False
-        node["children"] = [process_node(child, level + 1) for child in node["children"]]
+        # Перевіряємо, чи children є списком перед ітерацією
+        if isinstance(node["children"], list):
+            node["children"] = [
+                process_node(child, level + 1) for child in node["children"]
+            ]
 
-    # If node has no "value" property, copy label to value with level index prefix
+    # Якщо немає "value", безпечно створюємо з label
     if "value" not in node:
-        node["value"] = f"{level}_{node.get('label', '')}"
+        label_val = node.get("label", "unknown")
+        node["value"] = f"{level}_{label_val}"
 
-    # Append salt to leaf node values
+    # Додаємо унікальний сіль для кінцевих вузлів (leaves)
     if is_leaf:
         node["value"] = f"{node['value']}#{salt()}"
 
     return node
 
 
-def process_json_file(input_path, output_path=None):
-    with open(input_path, "r", encoding="utf-8") as f:
-        data = json.load(f)
+def process_json_file(input_path, output_path):
+    try:
+        with open(input_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
 
-    if isinstance(data, list):
-        result = [process_node(item, level=0) for item in data]
-    else:
-        result = process_node(data, level=0)
+        if isinstance(data, list):
+            result = [process_node(item, level=0) for item in data]
+        else:
+            result = process_node(data, level=0)
 
-    out_path = Path(output_path)
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(out_path, "w", encoding="utf-8") as f:
-        json.dump(result, f, ensure_ascii=False, indent=2)
+        out_path = Path(output_path)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(out_path, "w", encoding="utf-8") as f:
+            json.dump(result, f, ensure_ascii=False, indent=2)
 
-    print(f"Done. Saved to {out_path}")
+        print(f" Successfully processed: {input_path.name} -> {out_path}")
+    except Exception as e:
+        print(f"❌ Error processing {input_path.name}: {e}", file=sys.stderr)
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python convert-to-web.py <input> [output]")
+    if len(sys.argv) < 3:
+        print("Usage: python convert-to-web.py <input_dir> <output_dir>")
         sys.exit(1)
 
+    # Виправлено: отримуємо конкретні індекси з sys.argv
     input_path = Path(sys.argv[1])
-    
-    # Provide a default fallback if output_path is not specified
-    output_path = Path(sys.argv[2]) if len(sys.argv) > 2 else input_path.parent / "web"
-    
-    # Ensure the parent output directory itself exists before the loop
+    output_path = Path(sys.argv[2])
+
     output_path.mkdir(parents=True, exist_ok=True)
-    with open("data/vehicles/raw/test.json", "w", encoding="utf-8") as f:
-        json.dump({"var":1}, f, ensure_ascii=False, indent=2)
+
     extension = "*.json"
     files = list(input_path.glob(extension))
-    print(f"Found files: {files}") # This will debug if files are actually found
-    
+    print(f"Found files: {files}")
+
     for file in files:
         process_json_file(file, output_path / file.name)
-
