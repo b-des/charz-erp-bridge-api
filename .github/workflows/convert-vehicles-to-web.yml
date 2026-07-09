@@ -42,6 +42,7 @@ jobs:
 
       # Step 5: Commit and push the generated files
       - name: Commit and push changes
+        if: github.event_name == 'push'
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@://github.com"
