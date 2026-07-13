@@ -1,3 +1,64 @@
-*
-!data
 data/vehicles/web/**
+##======================================================================
+## .NET / C# Build Artifacts
+##======================================================================
+[Bb]in/
+[Oo]bj/
+[Log]s/
+[Ll]og/
+*.bundle.js
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+##======================================================================
+## IDE & Editor Specifics
+##======================================================================
+# Visual Studio
+.vs/
+*.swp
+*~
+
+# Visual Studio Code
+.vscode/
+!.vscode/extensions.json
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+##======================================================================
+## Web API / Environment Secrets (CRITICAL)
+##======================================================================
+# Exclude sensitive environment variable configuration files
+.env
+.env.*
+!.env.example
+
+# Exclude local appsettings overrides containing secrets
+# DO NOT ignore the main 'appsettings.json' or 'appsettings.Development.json' 
+# unless they explicitly contain real production passwords/keys.
+appsettings.Local.json
+**/appsettings.Local.json
+
+##======================================================================
+## Package Management & Testing
+##======================================================================
+# NuGet Packages
+*.nupkg
+**/packages/
+project.lock.json
+project.fragment.lock.json
+
+# Test Results
+[Tt]est[Rr]esult*/
+*.VisualState.xml
+TestResult.xml
+nunit-*.xml
+
+##======================================================================
+## Operating System Overrides
+##======================================================================
+.DS_Store
+Thumbs.db

@@ -27,7 +27,7 @@ def process_node(node, level=0):
     # Якщо немає "value", безпечно створюємо з label
     if "value" not in node:
         label_val = node.get("label", "unknown")
-        node["value"] = f"{level}_{label_val}"
+        node["value"] = f"{level}_{label_val}#{salt()}"
 
     # Додаємо унікальний сіль для кінцевих вузлів (leaves)
     if is_leaf:
@@ -46,12 +46,10 @@ def process_json_file(input_path, output_path):
         else:
             result = process_node(data, level=0)
 
-        out_path = Path(output_path)
-        out_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(out_path, "w", encoding="utf-8") as f:
+        with open(output_path, "w", encoding="utf-8") as f:
             json.dump(result, f, ensure_ascii=False, indent=2)
 
-        print(f" Successfully processed: {input_path.name} -> {out_path}")
+        print(f" Successfully processed: {input_path.name} -> {output_path}")
     except Exception as e:
         print(f"❌ Error processing {input_path.name}: {e}", file=sys.stderr)
 
