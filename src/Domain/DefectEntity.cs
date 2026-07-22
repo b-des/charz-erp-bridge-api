@@ -7,7 +7,8 @@ public class DefectEntity
     public required string Order { get; set; }
     public required string Engine { get; set; }
     public required string Chassis { get; set; }
-    public string DocumentRef { get; set; } = string.Empty;
+    public string? DocumentRef { get; set; }
+    public string FilePath { get; set; }
     public DateTime Created { get; init; } = DateTime.Now;
     public DateTime Modified { get; init; } = DateTime.Now;
 }

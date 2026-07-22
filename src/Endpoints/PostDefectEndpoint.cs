@@ -13,7 +13,7 @@ public record DefectRequest(
     string EngineNumber,
     List<DefectPart> SelectedItems);
 
-public record DefectResponse(string DocumentRef);
+public record DefectResponse(string? DocumentRef);
 
 public class PostDefectEndpoint(OneCService oneCService, AppDbContext db) : Endpoint<DefectRequest, DefectResponse>
 {
@@ -26,16 +26,6 @@ public class PostDefectEndpoint(OneCService oneCService, AppDbContext db) : Endp
     public override async Task HandleAsync(DefectRequest request, CancellationToken ct)
     {
         var result = await oneCService.SendDefect(request, ct);
-        var toSave = new DefectEntity
-        {
-            Model = request.Model,
-            Order = request.OrderNumber,
-            Chassis = request.ChassisNumber,
-            Engine = request.EngineNumber
-
-        };
-        db.DefectEntityItems.Add(toSave);
-        await db.SaveChangesAsync(ct);
         await Send.OkAsync(new DefectResponse(result), ct);
     }
 }

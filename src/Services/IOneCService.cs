@@ -4,5 +4,5 @@ namespace CharzPiexApi;
 
 public interface IOneCService
 {
-    Task<string> SendDefect(DefectRequest request, CancellationToken ct);
+    Task<string?> SendDefect(DefectRequest request, CancellationToken ct);
 }

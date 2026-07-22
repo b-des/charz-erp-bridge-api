@@ -20,7 +20,7 @@ public class OneCClient(IConfiguration config, ILogger<OneCClient> logger) : IOn
             logger.LogInformation("1C COM server initializing");
             var type = Type.GetTypeFromProgID(oneCConfig[Constants.ProgId]) ??
                        throw new Exception("1C COM server not found");
-
+            
             _app = Activator.CreateInstance(type);
 
             var cmd = $"/D\"{oneCConfig[Constants.DbDir]}\" /M /N{oneCConfig[Constants.User]}";
@@ -69,7 +69,6 @@ public class OneCClient(IConfiguration config, ILogger<OneCClient> logger) : IOn
             {
                 logger.LogError(e, "1C COM server error");
             }
-
             return default;
         }
     }

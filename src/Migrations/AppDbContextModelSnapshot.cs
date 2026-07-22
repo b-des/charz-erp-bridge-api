@@ -15,7 +15,7 @@ namespace CharzPiexApi.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.28");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.29");
 
             modelBuilder.Entity("CharzPiexApi.Domain.DefectEntity", b =>
                 {
@@ -31,10 +31,13 @@ namespace CharzPiexApi.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("DocumentRef")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Engine")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FilePath")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

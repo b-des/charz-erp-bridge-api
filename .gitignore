@@ -6,11 +6,13 @@ data/vehicles/web/**
 [Oo]bj/
 [Log]s/
 [Ll]og/
+publish/
 *.bundle.js
 *.user
 *.suo
 *.userosscache
 *.sln.docstates
+*.db
 
 ##======================================================================
 ## IDE & Editor Specifics
