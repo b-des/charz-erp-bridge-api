@@ -49,6 +49,10 @@ jobs:
             "published": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
           }
           EOF
+          
+      - name: Copy assets
+        run: |
+          cp data publish
             
       - name: Create ZIP
         run: |
@@ -61,4 +65,6 @@ jobs:
           tag_name: v${{ steps.version.outputs.version }}
           name: CharzApi v${{ steps.version.outputs.version }}
           generate_release_notes: true
-          files: CharzApi-${{ steps.version.outputs.version }}.zip
+          files: |
+            CharzApi-${{ steps.version.outputs.version }}.zip
+            manifest.json
