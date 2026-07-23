@@ -2,6 +2,6 @@
 
 public static class  OneCMethods
 {
-    public const string Defect = nameof(Defect);         
+    public const string Defect = "ДефектовочнаяВедомость";         
     public const string CurrentDate = "ТекущаяДата";
 }
