@@ -35,11 +35,21 @@ jobs:
           dotnet publish src/CharzPiexApi.csproj \
             --configuration Release \
             --output publish
+          rm -f publish/appsettings*.json
 
       - name: Generate version
         id: version
         run: echo "version=1.0.${{ github.run_number }}" >> $GITHUB_OUTPUT
 
+      - name: Create manifest
+          run: |
+            cat <<EOF > manifest.json
+            {
+              "version": "${{ steps.version.outputs.version }}",
+              "published": "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            }
+            EOF
+            
       - name: Create ZIP
         run: |
           cd publish

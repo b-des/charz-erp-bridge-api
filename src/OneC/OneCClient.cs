@@ -24,6 +24,7 @@ public class OneCClient(IConfiguration config, ILogger<OneCClient> logger) : IOn
             _app = Activator.CreateInstance(type);
 
             var cmd = $"/D\"{oneCConfig[Constants.DbDir]}\" /M /N{oneCConfig[Constants.User]}";
+            logger.LogInformation("Initializing COM server with parameters: {cmd}", cmd);
             bool result = _app.Initialize(_app.RMTrade, cmd, Constants.NoSplashShow);
             logger.LogInformation($"1C COM server initialized: {result}");
         }
