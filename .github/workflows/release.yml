@@ -35,7 +35,7 @@ jobs:
           dotnet publish src/CharzPiexApi.csproj \
             --configuration Release \
             --output publish
-          rm -f publish/appsettings*.json
+          rm -f publish/appsettings.*.json
 
       - name: Generate version
         id: version
