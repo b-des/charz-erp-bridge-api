@@ -52,7 +52,7 @@ jobs:
           
       - name: Copy assets
         run: |
-          cp data publish
+          cp -r data publish
             
       - name: Create ZIP
         run: |
