@@ -13,6 +13,7 @@ publish/
 *.userosscache
 *.sln.docstates
 *.db
+*.db-*
 
 ##======================================================================
 ## IDE & Editor Specifics
