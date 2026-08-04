@@ -1,5 +1,4 @@
 ﻿using CharzPiexApi.Data;
-using CharzPiexApi.Domain;
 using FastEndpoints;
 
 namespace CharzPiexApi.Endpoints;
@@ -11,7 +10,8 @@ public record DefectRequest(
     string OrderNumber,
     string ChassisNumber,
     string EngineNumber,
-    List<DefectPart> SelectedItems);
+    List<DefectPart> SelectedItems
+    );
 
 public record DefectResponse(string? DocumentRef);
 
@@ -21,6 +21,17 @@ public class PostDefectEndpoint(OneCService oneCService, AppDbContext db) : Endp
     {
         Post("/api/defect");
         AllowAnonymous();
+        Description(x =>
+        {
+            x.WithName("CreateDefect");
+            x.WithTags("Defect");
+        });
+        Summary(s =>
+        {
+            s.Summary = "Posts a Defect";
+            s.Description = "Posts a Defect and send it to 1C";
+
+        });
     }
 
     public override async Task HandleAsync(DefectRequest request, CancellationToken ct)

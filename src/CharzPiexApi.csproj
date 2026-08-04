@@ -4,12 +4,15 @@
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <OpenApiGenerateDocuments>true</OpenApiGenerateDocuments>
+        <OpenApiDocumentsDirectory>.</OpenApiDocumentsDirectory>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="DotNetEnv" Version="3.2.0" />
         <PackageReference Include="FastEndpoints" Version="8.2.0" />
         <PackageReference Include="FastEndpoints.Security" Version="8.2.0" />
+		<PackageReference Include="FastEndpoints.Swagger" Version="8.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.*" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.29" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.*">
@@ -17,9 +20,15 @@
           <PrivateAssets>all</PrivateAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.*" />
+        <PackageReference Include="Microsoft.Extensions.ApiDescription.Server" Version="8.*">
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+          <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
         <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
         <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     </ItemGroup>
-
+    
+    <Target Name="RenameOpenApiFile" AfterTargets="GenerateOpenApiDocuments">
+        <Move SourceFiles="CharzPiexApi.json" DestinationFiles="openapi.json" Condition="Exists('CharzPiexApi.json')" />
+    </Target>
 </Project>

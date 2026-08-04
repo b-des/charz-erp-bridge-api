@@ -5,14 +5,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CharzPiexApi.Endpoints;
 
-
-
-public class GetDefectsListEndpoint(OneCService oneCService, AppDbContext db) : EndpointWithoutRequest<List<DefectEntity>>
+public class GetDefectsListEndpoint(AppDbContext db) : EndpointWithoutRequest<List<DefectEntity>>
 {
     public override void Configure()
     {
         Get("/api/defect");
         AllowAnonymous();
+        Description(x =>
+        {
+            x.WithName("GetDefects");
+            x.WithTags("Defect");
+        });
+        Summary(s =>
+        {
+            s.Summary = "Gets Defects";
+            s.Description = "Returns list of all sent Defects";
+        });
     }
 
     public override async Task HandleAsync(CancellationToken ct)

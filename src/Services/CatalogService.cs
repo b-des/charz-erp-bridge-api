@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using CharzPiexApi.Domain;
 using CharzPiexApi.Utils;
 
@@ -20,9 +21,10 @@ public class CatalogService(IWebHostEnvironment environment, IConfiguration conf
 
                 var jsonOptions = new JsonSerializerOptions
                 {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
                 };
-                var nodes = JsonSerializer.Deserialize<List<object>>(json, jsonOptions);
+                var nodes = JsonSerializer.Deserialize<List<VehicleDetails>>(json, jsonOptions);
                 return new VehicleCatalog(x!, VehicleUtils.GetReadableName(x!), nodes);
             })
             .ToList();

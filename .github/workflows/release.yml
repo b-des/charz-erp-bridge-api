@@ -68,3 +68,4 @@ jobs:
           files: |
             CharzApi-${{ steps.version.outputs.version }}.zip
             manifest.json
+            openapi.json
