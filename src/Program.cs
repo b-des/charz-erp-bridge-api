@@ -6,6 +6,7 @@ using CharzPiexApi.Middleware;
 using CharzPiexApi.Utils;
 using FastEndpoints;
 using FastEndpoints.Security;
+using FastEndpoints.Swagger;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -19,7 +20,6 @@ Logger.RegisterLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Використовувати Serilog потрібно ДО Build()
 builder.Host.UseSerilog();
 
 builder.Configuration.AddEnvironmentVariables();
@@ -30,7 +30,7 @@ builder.Configuration.AddEnvironmentVariables();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("Frontend", policy =>
-        policy.WithOrigins("http://localhost:5173")
+        policy.WithOrigins("*")
             .AllowAnyHeader()
             .AllowAnyMethod());
 });
@@ -48,7 +48,17 @@ builder.Services.AddAuthorization();
 // --------------------
 // FastEndpoints
 // --------------------
-builder.Services.AddFastEndpoints();
+builder.Services
+    .AddFastEndpoints()
+    .SwaggerDocument(options =>
+    {
+        options.DocumentSettings = settings =>
+        {
+            settings.Title = "Charz API";
+            settings.Version = "v1";
+            settings.Description = "REST API for 1C integration";
+        };
+    });
 
 // --------------------
 // Dependency Injection
@@ -104,6 +114,8 @@ try
     app.UseAuthorization();
 
     app.UseFastEndpoints();
+    app.UseOpenApi();
+    app.UseSwaggerUi();
 
     app.Run();
 }
