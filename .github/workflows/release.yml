@@ -54,6 +54,7 @@ jobs:
       - name: Copy assets
         run: |
           cp -r data publish
+          cp -r src/openapi.json ./openapi.json
             
       - name: Create ZIP
         run: |
