@@ -6,6 +6,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <OpenApiGenerateDocuments>true</OpenApiGenerateDocuments>
         <OpenApiDocumentsDirectory>.</OpenApiDocumentsDirectory>
+        <OpenApiGenerateDocumentsOptions>--file-name openapi</OpenApiGenerateDocumentsOptions>
     </PropertyGroup>
 
     <ItemGroup>
@@ -20,8 +21,8 @@
           <PrivateAssets>all</PrivateAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.*" />
-        <PackageReference Include="Microsoft.Extensions.ApiDescription.Server" Version="8.*">
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        <PackageReference Include="Microsoft.Extensions.ApiDescription.Server" Version="10.0.10">
+          <IncludeAssets>openapi</IncludeAssets>
           <PrivateAssets>all</PrivateAssets>
         </PackageReference>
         <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
