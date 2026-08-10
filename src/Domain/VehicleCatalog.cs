@@ -3,4 +3,4 @@
 public record VehicleCatalog(
     string Value,
     string Label,
-    List<object> Nodes);
+    List<VehicleDetails> Nodes);

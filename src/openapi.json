@@ -1,0 +1,351 @@
+{
+  "x-generator": "NSwag v14.7.1.0 (NJsonSchema v11.6.1.0 (Newtonsoft.Json v13.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Charz API",
+    "description": "REST API for 1C integration",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/defect": {
+      "get": {
+        "tags": [
+          "Defect",
+          "Api"
+        ],
+        "summary": "Gets Defects",
+        "description": "Returns list of all sent Defects",
+        "operationId": "GetDefects",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CharzPiexApiDomainDefectEntity"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Defect",
+          "Api"
+        ],
+        "summary": "Posts a Defect",
+        "description": "Posts a Defect and send it to 1C",
+        "operationId": "CreateDefect",
+        "requestBody": {
+          "x-name": "DefectRequest",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CharzPiexApiEndpointsDefectRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CharzPiexApiEndpointsDefectResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/vehicles": {
+      "get": {
+        "tags": [
+          "Vehicles",
+          "Api"
+        ],
+        "summary": "Gets vehicles catalog",
+        "description": "Returns list of available vehicles",
+        "operationId": "GetVehicles",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CharzPiexApiDomainVehicleCatalog"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/health": {
+      "get": {
+        "tags": [
+          "Health",
+          "Api"
+        ],
+        "summary": "Health Check",
+        "description": "Checks connection to 1C.",
+        "operationId": "GetHealth",
+        "responses": {
+          "200": {
+            "description": "Connection established",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CharzPiexApiDomainHealthStatus"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "1C unavailable"
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "Api"
+        ],
+        "operationId": "CharzPiexApiEndpointsLoginEndpoint",
+        "requestBody": {
+          "x-name": "LoginRequest",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CharzPiexApiEndpointsLoginRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CharzPiexApiEndpointsLoginResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CharzPiexApiDomainDefectEntity": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "model",
+          "order",
+          "engine",
+          "chassis"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "model": {
+            "type": "string"
+          },
+          "order": {
+            "type": "string"
+          },
+          "engine": {
+            "type": "string"
+          },
+          "chassis": {
+            "type": "string"
+          },
+          "documentRef": {
+            "type": "string",
+            "nullable": true
+          },
+          "filePath": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modified": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CharzPiexApiDomainVehicleCatalog": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "nodes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CharzPiexApiDomainVehicleDetails"
+            }
+          }
+        }
+      },
+      "CharzPiexApiDomainVehicleDetails": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "value",
+          "label"
+        ],
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "children": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/CharzPiexApiDomainVehicleDetails"
+            }
+          }
+        }
+      },
+      "CharzPiexApiDomainHealthStatus": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "healthy": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "CharzPiexApiEndpointsLoginResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "expiry": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CharzPiexApiEndpointsLoginRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "CharzPiexApiEndpointsDefectResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "documentRef": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "CharzPiexApiEndpointsDefectRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "model": {
+            "type": "string"
+          },
+          "orderNumber": {
+            "type": "string"
+          },
+          "chassisNumber": {
+            "type": "string"
+          },
+          "engineNumber": {
+            "type": "string"
+          },
+          "selectedItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CharzPiexApiEndpointsDefectPart"
+            }
+          }
+        }
+      },
+      "CharzPiexApiEndpointsDefectPart": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "replace": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "repair": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "missing": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "JWTBearerAuth": {
+        "type": "http",
+        "description": "Enter a JWT token to authorize the requests...",
+        "scheme": "Bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
